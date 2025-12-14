@@ -4,12 +4,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lab_week_06.model.CatModel
-import com.example.lab_week_06.model.CatBreed
-import com.example.lab_week_06.model.Gender
+import com.example.lab_week_06.model.*
 
-private val FEMALE_SYMBOL = "\u2640" // ♀
-private val MALE_SYMBOL = "\u2642"   // ♂
+private const val FEMALE_SYMBOL = "\u2640"
+private const val MALE_SYMBOL = "\u2642"
 private const val UNKNOWN_SYMBOL = "?"
 
 class CatViewHolder(
@@ -17,25 +15,29 @@ class CatViewHolder(
     private val imageLoader: ImageLoader
 ) : RecyclerView.ViewHolder(containerView) {
 
-    private val catBiographyView: TextView = containerView.findViewById(R.id.cat_biography)
-    private val catBreedView: TextView = containerView.findViewById(R.id.cat_breed)
-    private val catGenderView: TextView = containerView.findViewById(R.id.cat_gender)
-    private val catNameView: TextView = containerView.findViewById(R.id.cat_name)
-    private val catPhotoView: ImageView = containerView.findViewById(R.id.cat_photo)
+    private val catPhoto: ImageView =
+        containerView.findViewById(R.id.cat_photo)
+    private val catName: TextView =
+        containerView.findViewById(R.id.cat_name)
+    private val catBreed: TextView =
+        containerView.findViewById(R.id.cat_breed)
+    private val catBio: TextView =
+        containerView.findViewById(R.id.cat_biography)
+    private val catGender: TextView =
+        containerView.findViewById(R.id.cat_gender)
 
     fun bindData(cat: CatModel) {
-        imageLoader.loadImage(cat.imageUrl, catPhotoView)
-        catNameView.text = cat.name
+        imageLoader.loadImage(cat.imageUrl, catPhoto)
+        catName.text = cat.name
+        catBio.text = cat.biography
 
-        catBreedView.text = when (cat.breed) {
+        catBreed.text = when (cat.breed) {
             CatBreed.AmericanCurl -> "American Curl"
             CatBreed.BalineseJavanese -> "Balinese-Javanese"
             CatBreed.ExoticShorthair -> "Exotic Shorthair"
         }
 
-        catBiographyView.text = cat.biography
-
-        catGenderView.text = when (cat.gender) {
+        catGender.text = when (cat.gender) {
             Gender.Female -> FEMALE_SYMBOL
             Gender.Male -> MALE_SYMBOL
             Gender.Unknown -> UNKNOWN_SYMBOL
